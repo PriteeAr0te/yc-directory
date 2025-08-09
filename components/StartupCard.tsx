@@ -4,9 +4,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { Button } from './ui/button'
+import { Author, Startup } from '@/sanity/types'
+
+export type StartupTypeCard = Omit<Startup, "author"> & { author?: Author };
 
 const StartupCard = ({ post }: { post: StartupTypeCard }) => {
-    const { _createdAt, views, author: { _id: authorId, name }, title, description, category, _id, image } = post
+    const { _createdAt, views, author, title, description, category, _id, image } = post;
+    const authorId = author?._id;
+    const name = author?.name;
 
     return (
         <li className='startup-card bg-white border-[5px] border-black py-5 px-4 rounded-[22px] shadow-200 hover:border-primary transition-all duration-500 hover:shadow-300 hover:bg-primary-100 group'>
@@ -41,12 +46,12 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
                 <p className='font-normal text-[16px] line-clamp-2 mt-2 mb-3 text-black-100 break-all'>
                     {description}
                 </p>
-                <Image src={image} alt='placeholder' height={160} width={350} className='w-full h-[164px] rounded-[10px] object-cover' />
+                <Image src={image ?? "https://placehold.co/350x160"} alt='placeholder' height={160} width={350} className='w-full h-[164px] rounded-[10px] object-cover' />
             </Link>
 
             <div className='flex justify-between items-center gap-3 mt-5'>
-                <Link href={`/?query=${category.toLowerCase()}`}>
-                    <p className='font-medium text-[16px] text-black'>{category}</p>
+                <Link href={`/?query=${(category ?? '').toLowerCase()}`}>
+                    <p className='font-medium text-[16px] text-black'>{category ?? 'Uncategorized'}</p>
                 </Link>
                 <Button className='rounded-full bg-black-200 font-medium text-[16px] text-white px-5 py-3 !important' asChild>
                     <Link href={`/startup/${_id}`}>

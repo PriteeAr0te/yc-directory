@@ -7,11 +7,11 @@ export const startup = defineType({
     fields: [
         defineField({
             name: 'title',
-            type:'string',
+            type: 'string',
         }),
         defineField({
             name: 'slug',
-            type:'slug',
+            type: 'slug',
             options: {
                 source: 'title',
 
@@ -19,30 +19,30 @@ export const startup = defineType({
         }),
         defineField({
             name: 'author',
-            type:'reference',
-            to: {type: 'author'}
+            type: 'reference',
+            to: { type: 'author' }
         }),
         defineField({
             name: 'views',
-            type:'number',
+            type: 'number',
         }),
         defineField({
             name: 'description',
-            type:'text',
+            type: 'text',
         }),
         defineField({
             name: 'category',
-            type:'string',
+            type: 'string',
             validation: (Rule) => Rule.min(1).max(20).required().error("Please enter a Category")
         }),
-         defineField({
+        defineField({
             name: 'image',
-            type:'url',
+            type: 'url',
             validation: (Rule) => Rule.required(),
         }),
-         defineField({
+        defineField({
             name: 'pitch',
-            type:'markdown',
+            type: 'markdown',
         }),
     ],
 })
