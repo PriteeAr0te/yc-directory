@@ -8,6 +8,7 @@ import { Button } from './ui/button';
 import { Send } from 'lucide-react';
 import { formSchema } from '@/lib/validation';
 import { z } from 'zod';
+import { createPitch } from '@/lib/actions';
 import { useRouter } from 'next/navigation';
 
 const StartupForm = () => {
@@ -20,41 +21,36 @@ const StartupForm = () => {
         status: string;
     }
 
-    const handleFormSubmit = async (prevState: FormState, formData: FormData) => {
+    const handleFormSubmit = async (prevState: FormState | undefined, formData: FormData) => {
         try {
             const formValues = {
                 title: formData.get('title') as string,
                 description: formData.get('description') as string,
                 category: formData.get('category') as string,
-                imageUrl: formData.get('image-url') as string,
+                link: formData.get('link') as string,
                 pitch
             }
 
             await formSchema.parseAsync(formValues);
 
-            console.log(formValues);
+            console.log(formValues)
 
-            // const result = await createIdea(prevState, formData, pitch);
+            const result = await createPitch(prevState, formData, pitch);
 
-            // console.log(result);
+            if (result.status === 'SUCCESS') {
+                router.push(`/startup/${result._id}`)
+            }
 
-            // if (result.status === 'SUCCESS') {
-            //     router.push(`/startup/${result.id}`)
-            // }
-
-            // return result;
+            return result;
 
         } catch (error) {
             if (error instanceof z.ZodError) {
                 const fieldErrors = error.flatten().fieldErrors;
 
                 setErrors(fieldErrors as unknown as Record<string, string>);
-                //toast
 
                 return { ...prevState, error: 'Validation Failed', status: 'ERROR' };
             }
-
-            //toast
 
             return {
                 ...prevState,
@@ -119,18 +115,18 @@ const StartupForm = () => {
             </div>
 
             <div>
-                <label htmlFor='image-url' className='font-bold text-[18px] text-black uppercase'>
+                <label htmlFor='link' className='font-bold text-[18px] text-black uppercase'>
                     Image Link
                 </label>
 
                 <Input
-                    id="image-url"
-                    name="image-url"
+                    id="link"
+                    name="link"
                     className='border-[3px] border-black px-5 py-6 text-[18px] text-black font-semibold rounded-xl mt-1.5 placeholder:text-black-300'
                     required
                     placeholder="Startup Image URL" />
-                {errors.imageUrl &&
-                    <p className='text-red-500 mt-1.5 ml-4'>{errors.imageUrl}</p>}
+                {errors.link &&
+                    <p className='text-red-500 mt-1.5 ml-4'>{errors.link}</p>}
             </div>
 
             <div data-color-mode="light">
