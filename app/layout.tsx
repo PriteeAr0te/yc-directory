@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 const workSans = localFont({
   src: [
     {
-      path: './fonts/WorkSans-black.ttf',
+      path: './fonts/WorkSans-Black.ttf',
       weight: '900',
       style: 'normal',
     },
