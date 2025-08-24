@@ -19,7 +19,7 @@ const Navbar = async () => {
                     {session && session?.user ? (
                         <>
                             <Link href='/startup/create'>
-                                <span className='hidden sm:block'>Create</span>
+                                <span className='hidden sm:block cursor-pointer'>Create</span>
                                 <BadgePlus className='block sm:hidden size-6' />
                             </Link>
 
@@ -28,11 +28,11 @@ const Navbar = async () => {
                                 await signOut({ redirectTo: '/' })
                             }}
                             >
-                                <span className='hidden sm:block'>logout</span>
+                                <span className='hidden sm:block cursor-pointer'>logout</span>
                                 <LogOut className='block sm:hidden size-6' />
                             </form>
 
-                            <Link href={`/user/${session?.id}`}>
+                            <Link href={`/user/${session?.id}`} className='cursor-pointer'>
                                 <Avatar className="size-10">
                                     <AvatarImage
                                         src={session?.user?.image || ""}
@@ -49,7 +49,7 @@ const Navbar = async () => {
 
                                 await signIn('github')
                             }}>
-                                <button type='submit'>Login</button>
+                                <button type='submit' className='cursor-pointer'>Login</button>
                             </form>
                         </>
                     )}
