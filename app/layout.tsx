@@ -6,7 +6,7 @@ import "easymde/dist/easymde.min.css"
 const workSans = localFont({
   src: [
     {
-      path: './fonts/WorkSans-black.ttf',
+      path: './fonts/WorkSans-Black.ttf',
       weight: '900',
       style: 'normal',
     },
